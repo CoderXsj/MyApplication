@@ -103,8 +103,6 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
         for(int i = 0;i < mIndicatorCount;i++){
             canvas.drawCircle(paddingLeft,0,mIndicatorSize / 2,mCirclePaint);
         }
-
-//        canvas.drawCircle(paddingLeft + m);
     }
 
     @Override
