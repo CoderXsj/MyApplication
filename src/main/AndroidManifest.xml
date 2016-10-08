@@ -32,7 +32,7 @@
     
     <application android:allowBackup="true" android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name" android:supportsRtl="true" android:theme="@style/AppTheme">
-        <activity android:name=".login.MainActivity">
+        <activity android:name=".launch.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -108,7 +108,7 @@
 
         <!-- User defined. 用户自定义的广播接收器-->
         <receiver
-            android:name="com.cydai.cncx.PushBroadcast"
+            android:name="com.cydai.cncx.orders.PushBroadcast"
             android:enabled="true">
             <intent-filter>
                 <!--Required 用户注册SDK的intent-->
@@ -135,7 +135,7 @@
         <!-- 目前这个渠道统计功能的报表还未开放。-->
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
         <!-- Required. AppKey copied from Portal -->
-        <meta-data android:name="JPUSH_APPKEY" android:value="Your AppKey"/>
+        <meta-data android:name="JPUSH_APPKEY" android:value="f39c2aafb72402329ce662ac"/>
     </application>
 
 </manifest>
