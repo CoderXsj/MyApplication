@@ -2,6 +2,7 @@ package com.cydai.cncx.widget;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -11,17 +12,26 @@ import android.widget.TextView;
  * Email : 497881309@qq.com
  */
 public class CountDownTextView extends TextView{
+    private int mCount;
 
-    Handler mHandler = new Handler();
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+        }
+;    };
 
-//    private
+    private Runnable mDelayRunnable = new Runnable() {
+        @Override
+        public void run() {
+        }
+    };
 
     public CountDownTextView(Context context) {
-        super(context);
+        this(context,null);
     }
 
     public CountDownTextView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs,0);
     }
 
     public CountDownTextView(Context context, AttributeSet attrs, int defStyleAttr) {
