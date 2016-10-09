@@ -7,10 +7,17 @@ package com.cydai.cncx.common;
  */
 public class Constants {
 
-    public static String SHARE_MENU = "SHARE_PREFERENCE";
+    public final static String BASE_HOST = "http://120.76.138.252:8005";
 
-    public static String FIRST_ENTER = "isFirstEnter";
+    public final static String BASE_URL = BASE_HOST + "/api";
 
+    public final static String SHARE_MENU = "SHARE_PREFERENCE";
+
+    public final static String FIRST_ENTER = "isFirstEnter";
+
+    public final static String HAVE_LOGIN = "isLogin";
+
+    public final static String KEY_ACCESS_TOKEN = "Access_Token";
 
 
 }

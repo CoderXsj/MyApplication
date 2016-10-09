@@ -7,8 +7,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import com.cydai.cncx.R;
+import com.cydai.cncx.util.AppLogger;
 import com.cydai.cncx.util.DensityUtils;
 
 /**
@@ -24,6 +26,7 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
 
     private Paint mCirclePaint;         //静止的圆的画笔(空心)
     private Paint mCurrentPaint;        //当前圆的画笔(实心)
+    private ViewPager mViewPager;
 
     private int lastPosition = 0;
     private float mOffset;
@@ -42,26 +45,27 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
         initView(attrs);
     }
 
+    public void setViewPager(ViewPager mViewPager) {
+        this.mViewPager = mViewPager;
+    }
+
     private void initView(AttributeSet attrs){
-        if(attrs != null) {
-            TypedArray array = getResources().obtainAttributes(attrs, R.styleable.IndicatorView);
-            for (int i = 0; i < array.getIndexCount(); i++) {
-                int index = array.getIndex(i);
-                switch (index) {
-                    case R.styleable.IndicatorView_indicator_size:
-                        mIndicatorSize = array.getDimensionPixelSize(index, DensityUtils.dp2px(getContext(),20));
-                        break;
-                    case R.styleable.IndicatorView_indicator_color:
-                        mIndicatorSize = array.getColor(index, Color.WHITE);
-                        break;
-                }
+        mIndicatorSize = DensityUtils.dp2px(getContext(),10);
+        mIndicatorColor = Color.WHITE;
+
+        TypedArray array = getResources().obtainAttributes(attrs, R.styleable.IndicatorView);
+        for (int i = 0; i < array.getIndexCount(); i++) {
+            int index = array.getIndex(i);
+            switch (index) {
+                case R.styleable.IndicatorView_indicator_size:
+                    mIndicatorSize = array.getDimensionPixelSize(index, DensityUtils.dp2px(getContext(),20));
+                    break;
+                case R.styleable.IndicatorView_indicator_color:
+                    mIndicatorSize = array.getColor(index, Color.WHITE);
+                    break;
             }
-            array.recycle();
-        }else{
-            //设置默认值
-            mIndicatorSize = DensityUtils.dp2px(getContext(),20);
-            mIndicatorColor = Color.WHITE;
         }
+        array.recycle();
 
         mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCirclePaint.setColor(mIndicatorColor);
@@ -80,18 +84,27 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
 
         int width = 0;
         int height = mIndicatorSize;
+        if(mViewPager != null) {
+            mIndicatorCount = mViewPager.getAdapter().getCount();
+            mViewPager.addOnPageChangeListener(this);
+        }
 
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
 
         if(widthMode == MeasureSpec.EXACTLY){
             width = MeasureSpec.getSize(widthMeasureSpec);
         }else if(widthMode == MeasureSpec.AT_MOST || widthMode == MeasureSpec.UNSPECIFIED){
-            width = getPaddingLeft()
-                    + mIndicatorCount * mIndicatorSize
-                    + (mIndicatorCount == 0 ? 0 : mIndicatorSize * 3)
-                    + getPaddingRight();
+            if(mIndicatorCount == 1) {
+                width = getPaddingLeft()
+                        + mIndicatorCount * mIndicatorSize
+                        + getPaddingRight();
+            }else if(mIndicatorCount > 1){
+                width = getPaddingLeft()
+                        + mIndicatorCount * mIndicatorSize
+                        + mIndicatorSize * 3 * (mIndicatorCount - 1)
+                        + getPaddingRight();
+            }
         }
-
         setMeasuredDimension(width,height);
     }
 
@@ -99,10 +112,17 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
     protected void onDraw(Canvas canvas) {
         int paddingLeft = getPaddingLeft();
 
+        int offset = 0;
+        if(mIndicatorCount > 1)
+            offset = (getWidth() - mIndicatorCount * mIndicatorSize) / (mIndicatorCount - 1);
+
         //画出实心小圆点
         for(int i = 0;i < mIndicatorCount;i++){
-            canvas.drawCircle(paddingLeft,0,mIndicatorSize / 2,mCirclePaint);
+            int x = mIndicatorSize / 2  + offset * i + getWidth() / mIndicatorCount / 2;
+            canvas.drawCircle(x ,getHeight() / 2,mIndicatorSize / 2,mCirclePaint);
         }
+
+        canvas.drawCircle(mIndicatorSize / 2  + offset * lastPosition + getWidth() / mIndicatorCount / 2 + mOffset * getWidth() / mIndicatorCount,getHeight() / 2,mIndicatorSize / 2,mCurrentPaint);
     }
 
     @Override
@@ -112,6 +132,7 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
         }else{
             lastPosition = position;
         }
+        invalidate();
     }
 
     @Override
