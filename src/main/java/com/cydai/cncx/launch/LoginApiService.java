@@ -15,6 +15,6 @@ public interface LoginApiService {
     @POST("driver/login")
     Observable<String> login(@Header("code") String code,@Header("mobile") String mobile,@Header("driver_token") String driverToken);
 
-    @POST("driver/login")
-    Observable<String> sendSms();
+    @POST("ispublic/send")
+    Observable<String> sendSms(@Header("mobile") String mobile,@Header("type") String type);
 }

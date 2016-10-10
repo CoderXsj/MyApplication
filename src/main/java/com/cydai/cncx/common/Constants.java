@@ -9,7 +9,7 @@ public class Constants {
 
     public final static String BASE_HOST = "http://120.76.138.252:8005";
 
-    public final static String BASE_URL = BASE_HOST + "/api";
+    public final static String BASE_URL = BASE_HOST + "/api/";
 
     public final static String SHARE_MENU = "SHARE_PREFERENCE";
 
