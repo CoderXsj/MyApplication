@@ -2,15 +2,14 @@ package com.cydai.cncx.network;
 
 import android.content.Context;
 
+import com.cydai.cncx.MyApplication;
 import com.cydai.cncx.common.Constants;
 import com.cydai.cncx.util.SharedPreUtils;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Headers;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -33,14 +32,17 @@ public class NetworkClient {
     private NetworkClient(Context context,String url) {
         okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new HeaderInterceptor())
-                .addInterceptor(new LoggerInterceptor("network"))
+                .addInterceptor(new LoggerInterceptor("network",true))
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)
                 .readTimeout(10000L,TimeUnit.MILLISECONDS)
                 .build();
 
         retrofit = new Retrofit.Builder()
+                .client(okHttpClient)
                 .baseUrl(url)
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(JsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 
@@ -69,14 +71,19 @@ public class NetworkClient {
     class HeaderInterceptor implements Interceptor{
         @Override
         public Response intercept(Chain chain) throws IOException {
-            Request request = chain.request();
+            Request oldRequest = chain.request();
+            //添加请求中的固定参数
+            HttpUrl.Builder authorizedUrlBuilder = oldRequest
+                    .url()
+                    .newBuilder()
+                    .addQueryParameter(Constants.SP_ACCESS_TOKEN, SharedPreUtils.getString(Constants.SP_ACCESS_TOKEN, MyApplication.getContext()));
 
-            Map<String,String> headers = new HashMap<>();
-            headers.put(Constants.KEY_ACCESS_TOKEN, SharedPreUtils.getString(Constants.KEY_ACCESS_TOKEN,"",mContext));
+            Request newRequest = oldRequest.newBuilder()
+                    .method(oldRequest.method(), oldRequest.body())
+                    .url(authorizedUrlBuilder.build())
+                    .build();
 
-            request.newBuilder().headers(Headers.of(headers));
-
-            return null;
+            return chain.proceed(newRequest);
         }
     }
 }

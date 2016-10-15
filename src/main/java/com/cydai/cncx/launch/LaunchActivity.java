@@ -12,13 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import com.cydai.cncx.BaseActivity;
-import com.cydai.cncx.R;
+
 import com.cydai.cncx.common.AnimatorAdapter;
+import com.cydai.cncx.common.BaseActivity;
 import com.cydai.cncx.common.Constants;
+import com.cydai.cncx.orders.MainActivity;
 import com.cydai.cncx.util.AppLogger;
 import com.cydai.cncx.util.SharedPreUtils;
 import com.cydai.cncx.widget.IndicatorView;
+import com.example.apple.cjyc.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,15 +36,15 @@ public class LaunchActivity extends BaseActivity{
     private Runnable mDelayRunnable = new Runnable() {
         @Override
         public void run() {
-            boolean isFirstLogin = SharedPreUtils.getBoolean(Constants.FIRST_ENTER, true, LaunchActivity.this);
+            boolean isFirstLogin = SharedPreUtils.getBoolean(Constants.SP_FIRST_ENTER, true, LaunchActivity.this);
 
             if (isFirstLogin) {
-                SharedPreUtils.putBoolean(Constants.FIRST_ENTER, false, LaunchActivity.this);
+                SharedPreUtils.putBoolean(Constants.SP_FIRST_ENTER, false, LaunchActivity.this);
                 showWelcomePage();
             } else {
                 //不是第一次进入程序
-                if(SharedPreUtils.getBoolean(Constants.HAVE_LOGIN, false, LaunchActivity.this)) {
-//                    jump2Activity(MainActivity.class, R.anim.anim_left_in, R.anim.anim_left_out);
+                if(SharedPreUtils.getBoolean(Constants.SP_HAVE_LOGIN, false, LaunchActivity.this)) {
+                    jump2Activity(MainActivity.class, R.anim.anim_left_in, R.anim.anim_left_out);
                     finish();
                 }else{
                     jump2Activity(LoginActivity.class, R.anim.anim_left_in, R.anim.anim_left_out);

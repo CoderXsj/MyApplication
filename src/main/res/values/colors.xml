@@ -8,4 +8,18 @@
     <color name="colorWhite">#fff</color>
 
     <drawable name="colorWhite">#fff</drawable>
+
+    <color name="card_background">#ffffff</color>
+    <color name="card_shadow">#10000000</color>
+    <color name="lite_blue">#ff359ff2</color>
+    <color name="window_background">#00000000</color>
+    <color name="black_de">#DE000000</color>
+
+    <color name="red">#FFC93437</color>
+    <color name="blue">#FF375BF1</color>
+    <color name="yellow">#FFF7D23E</color>
+    <color name="green">#FF34A350</color>
+
+    <color name="colorTransparent">#00000000</color>
+
 </resources>

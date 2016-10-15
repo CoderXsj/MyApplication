@@ -7,4 +7,45 @@
         <item name="colorPrimaryDark">@color/colorBlack</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="ActionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/action_button_height</item>
+        <item name="android:minWidth">@dimen/action_button_min_width</item>
+        <item name="android:paddingLeft">@dimen/action_button_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/action_button_padding_horizontal</item>
+        <item name="android:background">@drawable/button</item>
+        <item name="android:textSize">@dimen/action_button_text_size</item>
+    </style>
+
+    <style name="actionBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@android:color/primary_text_light</item>
+    </style>
+
+    <style name="customTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="actionBarTheme">@style/actionBarTheme</item>
+        <item name="colorPrimary">#FFA500</item>
+        <item name="colorPrimaryDark">#CCa500</item>
+    </style>
+
+    <style name="progress_circle">
+        <item name="android:indeterminateDrawable">@drawable/sp_getting_order_bg</item>
+        <item name="android:minWidth">73dp</item>
+        <item name="android:minHeight">73dp</item>
+        <item name="android:maxWidth">73dp</item>
+        <item name="android:maxHeight">73dp</item>
+    </style>
+
+    <style name="number_picker_dialog">
+        <item name= "android:windowIsFloating" >true </item>
+        <item name ="android:windowIsTranslucent" >true </item>
+        <item name= "android:windowFrame">@null</item >
+        <item name= "android:windowNoTitle" >true </item>
+        <item name ="android:colorBackgroundCacheHint" >@null </item>
+        <item name ="android:windowBackground" >@color/colorTransparent</item>
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+        <item name ="android:windowContentOverlay" >@null </item>
+        <item name ="android:windowActionModeOverlay" >true </item>
+    </style >
+
 </resources>

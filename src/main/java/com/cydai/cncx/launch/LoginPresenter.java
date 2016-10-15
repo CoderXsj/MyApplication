@@ -1,19 +1,15 @@
 package com.cydai.cncx.launch;
 
-import android.content.Context;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.widget.TextView;
 
-import com.cydai.cncx.BasePresenter;
 import com.cydai.cncx.MyApplication;
-import com.cydai.cncx.util.AppLogger;
+import com.cydai.cncx.common.BasePresenter;
+import com.cydai.cncx.common.Constants;
 import com.cydai.cncx.util.MyToast;
+import com.cydai.cncx.util.SharedPreUtils;
 import com.cydai.cncx.widget.CountDownTextView;
 
 import rx.Subscription;
-
-import static android.content.Context.TELEPHONY_SERVICE;
 
 /**
  * Created by 薛世君
@@ -21,7 +17,11 @@ import static android.content.Context.TELEPHONY_SERVICE;
  * Email : 497881309@qq.com
  */
 
-public class LoginPresenter extends BasePresenter<LoginContract.ILoginView,LoginContract.ILoginModule> implements LoginContract.ILoginPresenter,LoginModule.HttpCallback<String>{
+public class LoginPresenter extends BasePresenter<LoginContract.ILoginView,LoginContract.ILoginModule>
+        implements LoginContract.ILoginPresenter,
+                    Module.LoginCallback<String>,
+                    Module.SendSmsCallback<String>
+{
 
     public LoginPresenter(LoginContract.ILoginView view, LoginContract.ILoginModule module){
         super(view,module);
@@ -53,31 +53,36 @@ public class LoginPresenter extends BasePresenter<LoginContract.ILoginView,Login
 
     @Override
     public void login(String username, String confirmationCode) {
-        Context context = MyApplication.getContext();
-        TelephonyManager TelephonyMgr = (TelephonyManager)context.getSystemService(TELEPHONY_SERVICE);
-        String imei = TelephonyMgr.getDeviceId();
+        mView.showProgressDialog();
+//        Context context = MyApplication.getContext();
+//        TelephonyManager TelephonyMgr = (TelephonyManager)context.getSystemService(TELEPHONY_SERVICE);
+//        String imei = TelephonyMgr.getDeviceId();
 
-        Subscription subscription = mModule.login(username, confirmationCode, imei);
-
+        Subscription subscription = mModule.login(username, confirmationCode, username);
         addSubscription(subscription);
     }
 
     @Override
-    public void loginSuccess(String msg) {
-        MyToast.L("登陆成功");
+    public void loginSuccess(String accessToken) {
+        mView.hiddenProgressDialog();
+        SharedPreUtils.putString (Constants.SP_ACCESS_TOKEN,accessToken,MyApplication.getContext());
+        SharedPreUtils.putBoolean (Constants.SP_HAVE_LOGIN,true,MyApplication.getContext());
+        mView.jump2mainActivity();
     }
 
     @Override
     public void loginFailed(String msg) {
-        MyToast.L("登陆失败");
+        mView.hiddenProgressDialog();
+        mView.showMessageDialog(msg);
     }
 
     @Override
-    public void sendSmsSuccess(String msg) {
+    public void sendSmsSuccess() {
         MyToast.L("发送成功");
     }
 
     @Override
     public void sendSmsFailed(String msg) {
+        MyToast.L(msg);
     }
 }

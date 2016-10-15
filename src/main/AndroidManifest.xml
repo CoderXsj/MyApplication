@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.cydai.cncx">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.apple.cjyc">
 
     <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="23" />
 
     <!-- Required -->
     <permission
-        android:name="com.cydai.cncx.permission.JPUSH_MESSAGE"
+        android:name="com.example.apple.cjyc.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
     <!-- Required -->
-    <uses-permission android:name="com.cydai.cncx.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="com.example.apple.cjyc.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -29,13 +29,30 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    
+
+    <!-- 腾讯bugly -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <!--the following two permissions are required if you want to take photo in selector-->
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
     <application android:allowBackup="true" android:icon="@mipmap/ic_launcher"
-        android:name=".MyApplication"
+        android:name="com.cydai.cncx.MyApplication"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".launch.LaunchActivity">
+        <activity android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            />
+
+        <activity android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
+        <activity android:name="com.cydai.cncx.launch.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,7 +60,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".launch.LoginActivity"></activity>
+        <activity android:name="com.cydai.cncx.launch.LoginActivity" android:launchMode="singleTask" >
+        </activity>
+
+        <activity android:name="com.cydai.cncx.launch.BindCarActivity">
+        </activity>
+
+        <activity android:name="com.cydai.cncx.launch.ValidateMobileActivity"></activity>
+
+        <activity android:name="com.cydai.cncx.launch.AuthenticationActivity">
+        </activity>
+
+        <activity android:name="com.cydai.cncx.orders.MainActivity">
+        </activity>
 
         <!-- Required SDK 核心功能-->
         <!-- option since 2.0.5 可配置PushService，DaemonService,PushReceiver,AlarmReceiver的android:process参数 将JPush相关组件设置为一个独立进程 -->
@@ -68,7 +97,7 @@
             android:exported="true">
             <intent-filter >
                 <action android:name="cn.jpush.android.intent.DaemonService" />
-                <category android:name="com.cydai.cncx"/>
+                <category android:name="com.example.apple.cjyc"/>
             </intent-filter>
         </service>
 
@@ -78,7 +107,7 @@
             android:enabled="true" >
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-                <category android:name="com.cydai.cncx"/>
+                <category android:name="com.example.apple.cjyc"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -99,7 +128,7 @@
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.cydai.cncx" />
+                <category android:name="com.example.apple.cjyc" />
             </intent-filter>
         </activity>
         <!-- Required SDK核心功能-->
@@ -113,7 +142,7 @@
 
         <!-- User defined. 用户自定义的广播接收器-->
         <receiver
-            android:name="com.cydai.cncx.orders.PushBroadcast"
+            android:name="com.cydai.cncx.PushBroadcast"
             android:enabled="true">
             <intent-filter>
                 <!--Required 用户注册SDK的intent-->
@@ -128,7 +157,7 @@
                 <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
-                <category android:name="com.cydai.cncx" />
+                <category android:name="com.example.apple.cjyc" />
             </intent-filter>
         </receiver>
 
@@ -140,7 +169,7 @@
         <!-- 目前这个渠道统计功能的报表还未开放。-->
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
         <!-- Required. AppKey copied from Portal -->
-        <meta-data android:name="JPUSH_APPKEY" android:value="f39c2aafb72402329ce662ac"/>
+        <meta-data android:name="JPUSH_APPKEY" android:value="ea2fd9c617ff23cd98bfebfd"/>
     </application>
 
 </manifest>

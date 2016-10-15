@@ -1,7 +1,11 @@
 package com.cydai.cncx.launch;
 
-import retrofit2.http.Header;
+import org.json.JSONObject;
+
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -13,8 +17,8 @@ import rx.Observable;
 public interface LoginApiService {
 
     @POST("driver/login")
-    Observable<String> login(@Header("code") String code,@Header("mobile") String mobile,@Header("driver_token") String driverToken);
+    Observable<String> login(@Query("code") String code, @Query("mobile") String mobile, @Query("driver_token") String driverToken);
 
     @POST("ispublic/send")
-    Observable<String> sendSms(@Header("mobile") String mobile,@Header("type") String type);
+    Observable<Response<String>> sendSms(@Query("mobile") String mobile, @Query("type") String type);
 }

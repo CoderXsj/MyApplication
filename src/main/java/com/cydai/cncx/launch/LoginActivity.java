@@ -5,14 +5,16 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cydai.cncx.BaseActivity;
-import com.cydai.cncx.R;
+import com.cydai.cncx.common.BaseActivity;
+import com.cydai.cncx.orders.MainActivity;
+import com.cydai.cncx.util.DialogCreateFactory;
 import com.cydai.cncx.util.MyToast;
 import com.cydai.cncx.widget.CountDownTextView;
+import com.example.apple.cjyc.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,11 +25,11 @@ import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity implements LoginContract.ILoginView {
     @BindView(R.id.tv_confirmation) CountDownTextView mTvConfirmation;
-    @BindView(R.id.iv_password) ImageView mIvPassword;
     @BindView(R.id.et_password_code) EditText mEtPasswordCode;
-    @BindView(R.id.iv_username) ImageView mIvUserName;
     @BindView(R.id.et_phone_number) EditText mEtPhoneNumber;
     @BindView(R.id.tv_contract) TextView mTvContract;
+    @BindView(R.id.btn_back) Button mBtnBack;
+    @BindView(R.id.tv_title) TextView mTvTitle;
 
     private LoginPresenter mPresenter;
     private ProgressDialog mDialog;
@@ -43,43 +45,14 @@ public class LoginActivity extends BaseActivity implements LoginContract.ILoginV
 
     @Override
     public void initVariables() {
-        mEtPhoneNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-            //得到焦点
-            if (hasFocus) {
-                mEtPhoneNumber.setTextColor(getResources().getColor(R.color.colorWhite));
-                mEtPhoneNumber.setCursorVisible(true);
-                mIvUserName.setImageDrawable(getResources().getDrawable(R.mipmap.ic_username_selected));
-            } else {
-                //失去焦点
-                mEtPhoneNumber.setCursorVisible(false);
-                mIvUserName.setImageDrawable(getResources().getDrawable(R.mipmap.ic_username_unselected));
-            }
-            }
-        });
-
-        mEtPasswordCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-            //得到焦点
-            if (hasFocus) {
-                mEtPasswordCode.setTextColor(getResources().getColor(R.color.colorWhite));
-                mEtPasswordCode.setCursorVisible(true);
-                mIvPassword.setImageDrawable(getResources().getDrawable(R.mipmap.ic_password_selected));
-            } else {
-                //失去焦点
-                mEtPasswordCode.setCursorVisible(false);
-                mIvPassword.setImageDrawable(getResources().getDrawable(R.mipmap.ic_password_unselected));
-            }
-            }
-        });
-
-        LoginModule module = new LoginModule();
+        Module module = new Module();
         mPresenter = new LoginPresenter(this,module);
-        module.setCallback(mPresenter);
+        module.setLoginCallback(mPresenter);
+        module.setSendSmsCallback(mPresenter);
 
         mTvContract.setText("<<楚牛约车服务条款>>");
+        mBtnBack.setVisibility(View.GONE);
+        mTvTitle.setText("登录");
     }
 
     /**
@@ -110,17 +83,22 @@ public class LoginActivity extends BaseActivity implements LoginContract.ILoginV
     }
 
     @Override
-    public void dismissProgressDialog() {
+    public void hiddenProgressDialog() {
         mDialog.dismiss();
     }
 
     @Override
     public void showOriginalConfirmationButton() {
-        mTvConfirmation.setClickable(false);
-        mTvConfirmation.setEnabled(false);
-        mTvConfirmation.setTextColor(Color.parseColor("#705753"));
+        mTvConfirmation.setClickable(true);
+        mTvConfirmation.setEnabled(true);
+        mTvConfirmation.setTextColor(Color.parseColor("#ffffff"));
         mTvConfirmation.setBackgroundResource(R.drawable.sp_confirmation_original);
         mTvConfirmation.setText("获取验证码");
+    }
+
+    @Override
+    public void showMessageDialog(String msg) {
+        DialogCreateFactory.createAlertDialog(this,"消息",msg+"").show();
     }
 
     @Override
@@ -130,6 +108,23 @@ public class LoginActivity extends BaseActivity implements LoginContract.ILoginV
         mTvConfirmation.setText("发送成功(" + million + ")");
         mTvConfirmation.setClickable(false);
         mTvConfirmation.setEnabled(false);
+    }
+
+    @Override
+    @OnClick(R.id.bt_register)
+    public void jump2registerActivity() {
+        jump2Activity(ValidateMobileActivity.class,R.anim.anim_left_in,R.anim.anim_left_out);
+    }
+
+    @Override
+    public void jump2mainActivity() {
+        jump2Activity(MainActivity.class,R.anim.anim_left_in,R.anim.anim_left_out);
+        finish();
+    }
+
+    @OnClick(R.id.btn_login)
+    public void login(){
+        mPresenter.login(mEtPhoneNumber.getText().toString(),mEtPasswordCode.getText().toString());
     }
 
     @Override

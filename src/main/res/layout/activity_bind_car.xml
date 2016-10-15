@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fafafa"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_common_top" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x50"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="@dimen/x31"
+            android:background="@drawable/sp_login_input"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/x40"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x15"
+                android:text="车牌号" />
+
+            <View
+                android:layout_width="@dimen/x1"
+                android:layout_height="@dimen/x30"
+                android:layout_marginLeft="@dimen/x15"
+                android:layout_marginRight="@dimen/x15"
+                android:background="#c9c9c9" />
+
+            <EditText
+                android:id="@+id/et_license_plate_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/x15"
+                android:background="@null"
+                android:hint="请输入车牌号"
+                android:textColor="#999999"
+                android:textColorHint="#999999"
+                android:textCursorDrawable="@null"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x50"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="@dimen/x18"
+            android:background="@drawable/sp_login_input"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/x40"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x15"
+                android:text="车架号" />
+
+            <View
+                android:layout_width="@dimen/x1"
+                android:layout_height="@dimen/x30"
+                android:layout_marginLeft="@dimen/x15"
+                android:layout_marginRight="@dimen/x15"
+                android:background="#c9c9c9" />
+
+            <EditText
+                android:id="@+id/et_vehicle_identification_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/x15"
+                android:background="@null"
+                android:hint="请输入车架号"
+                android:textColor="#999999"
+                android:textColorHint="#999999"
+                android:textCursorDrawable="@null"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x50"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="@dimen/x18"
+            android:background="@drawable/sp_login_input"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/x40"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x15"
+                android:text="所有人" />
+
+            <View
+                android:layout_width="@dimen/x1"
+                android:layout_height="@dimen/x30"
+                android:layout_marginLeft="@dimen/x15"
+                android:layout_marginRight="@dimen/x15"
+                android:background="#c9c9c9" />
+
+            <EditText
+                android:id="@+id/et_car_owner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/x15"
+                android:background="@null"
+                android:hint="请输入车辆所有人姓名"
+                android:textColor="#999999"
+                android:textColorHint="#999999"
+                android:textCursorDrawable="@null"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x50"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="@dimen/x18"
+            android:background="@drawable/sp_login_input"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/x40"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x15"
+                android:text="型号" />
+
+            <View
+                android:layout_width="@dimen/x1"
+                android:layout_height="@dimen/x30"
+                android:layout_marginLeft="@dimen/x15"
+                android:layout_marginRight="@dimen/x15"
+                android:background="#c9c9c9" />
+
+            <EditText
+                android:id="@+id/et_car_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/x15"
+                android:background="@null"
+                android:hint="请输入车辆品牌型号"
+                android:textColor="#999999"
+                android:textColorHint="#999999"
+                android:textCursorDrawable="@null"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x50"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="@dimen/x18"
+            android:background="@drawable/sp_login_input"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/x40"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x15"
+                android:text="颜色" />
+
+            <View
+                android:layout_width="@dimen/x1"
+                android:layout_height="@dimen/x30"
+                android:layout_marginLeft="@dimen/x15"
+                android:layout_marginRight="@dimen/x15"
+                android:background="#c9c9c9" />
+
+            <EditText
+                android:id="@+id/et_car_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/x15"
+                android:background="@null"
+                android:hint="请输入车辆颜色"
+                android:textColor="#999999"
+                android:textColorHint="#999999"
+                android:textCursorDrawable="@null"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="@dimen/x18"
+            android:text="行驶证正面照"
+            android:textColor="#333333"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="@dimen/x10"
+            android:text="请用手机横向拍摄以保证图片正常显示"
+            android:textColor="#fa8d00"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="@dimen/x18"
+            android:background="@drawable/sp_login_input">
+
+            <ImageView
+                android:id="@+id/iv_driving_license"
+                android:layout_width="@dimen/x190"
+                android:layout_height="@dimen/x120"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/x13"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_example" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/iv_driving_license"
+                android:layout_marginTop="@dimen/x13"
+                android:src="@mipmap/ic_corner" />
+
+            <Button
+                android:id="@+id/btn_upload_picture"
+                android:layout_width="@dimen/x190"
+                android:layout_height="@dimen/x30"
+                android:layout_below="@+id/iv_driving_license"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/x10"
+                android:background="@drawable/sp_login_bg"
+                android:text="上传照片"
+                android:textColor="#fff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_upload_picture"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/x13"
+                android:layout_marginTop="@dimen/x10"
+                android:text="驾龄需3年以上"
+                android:textColor="#999999"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="@dimen/x10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/x13"
+                android:gravity="center"
+                android:text="请确认以上信息准确无误"
+                android:textColor="#fa9d00"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="@dimen/x50"
+                android:layout_height="0.5dp"
+                android:layout_alignBaseline="@+id/tv_tip"
+                android:layout_alignParentLeft="true"
+                android:background="#c9c9c9" />
+
+            <View
+                android:layout_width="@dimen/x50"
+                android:layout_height="0.5dp"
+                android:layout_alignBaseline="@+id/tv_tip"
+                android:layout_alignParentRight="true"
+                android:background="#c9c9c9" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x30"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/x100"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="@dimen/x20"
+            android:background="@drawable/sp_login_bg"
+            android:text="确认提交"
+            android:textColor="#fff" />
+    </LinearLayout>
+</ScrollView>

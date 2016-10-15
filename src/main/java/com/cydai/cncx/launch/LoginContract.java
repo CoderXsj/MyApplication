@@ -21,17 +21,29 @@ public interface LoginContract {
         /**
          * 登陆进度的Dialog
          */
-        void dismissProgressDialog();
+        void hiddenProgressDialog();
 
         /**
          * 显示原始的验证码Button
          */
         void showOriginalConfirmationButton();
 
+        void showMessageDialog(String msg);
+
         /**
          * 更新原始验证码button
          */
         void updateConfirmationButton(long million);
+
+        /**
+         * 注册
+         */
+        void jump2registerActivity();
+
+        /**
+         * 跳转到MainActivity
+         */
+        void jump2mainActivity();
     }
 
     interface ILoginPresenter{

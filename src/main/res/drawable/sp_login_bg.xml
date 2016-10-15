@@ -10,17 +10,17 @@
         5.angle的值：从左到右为0；然后逆时针旋转，90度为从下到上，270为从上到下。-->
     <gradient
         android:angle="270"
-        android:endColor="#ea8c07"
-        android:startColor="#f3a314"
+        android:endColor="#fa8d00"
+        android:startColor="#fa8d00"
         />
     <size android:width="320dp" android:height="60dp" />
 
       <!--  <corners android:radius="150dp"/>-->
         <corners
-            android:bottomLeftRadius="25dp"
-            android:bottomRightRadius="25dp"
-            android:topLeftRadius="25dp"
-            android:topRightRadius="25dp" />
+            android:bottomLeftRadius="@dimen/x5"
+            android:bottomRightRadius="@dimen/x5"
+            android:topLeftRadius="@dimen/x5"
+            android:topRightRadius="@dimen/x5" />
 
         <!--padding：边界的间隔-->
         <!--<padding

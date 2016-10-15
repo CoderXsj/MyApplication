@@ -1,6 +1,6 @@
 package com.cydai.cncx.util;
 
-import com.cydai.cncx.BuildConfig;
+import com.example.apple.cjyc.BuildConfig;
 
 /**
  * Created by Administrator on 2016/10/8.

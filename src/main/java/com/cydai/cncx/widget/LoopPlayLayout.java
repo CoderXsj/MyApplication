@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
  * Date : 2016/10/9
  * Email : 497881309@qq.com
  */
-
 public class LoopPlayLayout extends RelativeLayout {
     private ViewPager mViewPager;
     private IndicatorView mIndicatorView;

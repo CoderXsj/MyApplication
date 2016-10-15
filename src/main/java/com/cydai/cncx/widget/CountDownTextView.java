@@ -2,7 +2,6 @@ package com.cydai.cncx.widget;
 
 import android.content.Context;
 import android.os.Handler;
-import android.os.Message;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -29,17 +28,17 @@ public class CountDownTextView extends TextView{
     private Runnable mDelayRunnable = new Runnable() {
         @Override
         public void run() {
-            if(mCount > 0) {
-                if(onUpdateTimeListener != null)
-                    onUpdateTimeListener.onUpdateTime(CountDownTextView.this,mCount);
+        if(mCount > 0) {
+            if(onUpdateTimeListener != null)
+                onUpdateTimeListener.onUpdateTime(CountDownTextView.this,mCount);
 
-                mCount--;
-                mHandler.postDelayed(mDelayRunnable, 1000);
-            }else{
-                isStart = false;
-                if(onUpdateTimeListener != null)
-                    onUpdateTimeListener.onFinish();
-            }
+            mCount--;
+            mHandler.postDelayed(mDelayRunnable, 1000);
+        }else{
+            isStart = false;
+            if(onUpdateTimeListener != null)
+                onUpdateTimeListener.onFinish();
+        }
         }
     };
 

@@ -2,15 +2,22 @@ package com.cydai.cncx.launch;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.cydai.cncx.common.Constants;
 import com.cydai.cncx.network.NetworkClient;
 import com.cydai.cncx.util.AppLogger;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -22,7 +29,7 @@ import rx.schedulers.Schedulers;
 public class LoginModule implements LoginContract.ILoginModule {
 
     public interface HttpCallback<T>{
-        void loginSuccess(T msg);
+        void loginSuccess();
 
         void loginFailed(T msg);
 
@@ -50,21 +57,20 @@ public class LoginModule implements LoginContract.ILoginModule {
         .subscribe(new Action1<String>() {
             @Override
             public void call(String s) {
-                if(callback != null){
-                    JSONObject jsonObject = JSON.parseObject(s);
-                    String status = jsonObject.getString("status");
+            if(callback != null){
+                JSONObject jsonObject = JSON.parseObject(s);
+                String status = jsonObject.getString("status");
 
-                    if("success".equals(status)){
-                        callback.loginSuccess(s);
-                    }else{
-                        callback.loginFailed(s);
-                    }
+                if("success".equals(status)){
+                    callback.loginSuccess();
+                }else{
+                    callback.loginFailed(jsonObject.getString("errorMsg"));
                 }
+            }
             }
         }, new Action1<Throwable>() {
             @Override
             public void call(Throwable throwable) {
-                AppLogger.e("服务器加载失败 : " + throwable.toString());
             }
         });
         return subscription;
@@ -72,25 +78,34 @@ public class LoginModule implements LoginContract.ILoginModule {
 
     @Override
     public Subscription getConfirmationCode(String username, String type) {
-        Observable<String> confirmationCodeRequest = mService.sendSms(username, type);
+        Observable<Response<String>> confirmationCodeRequest = mService.sendSms(username, type);
         Subscription subscription = confirmationCodeRequest.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .map(new Func1<Response<String>, String>() {
+                @Override
+                public String call(Response<String> response) {
+                    return response.body();
+                }
+            })
             .subscribe(new Action1<String>() {
                 @Override
                 public void call(String s) {
+                    AppLogger.e("call :" + s);
                     JSONObject jsonObject = JSON.parseObject(s);
                     String status = jsonObject.getString("status");
 
-                    if("success".equals(status)){
+                    if (Constants.STATUS_SUCCESS.equals(status)) {
                         callback.sendSmsSuccess(s);
-                    }else{
+                    } else if(Constants.STATUS_FAILURE.equals(status)){
                         callback.sendSmsFailed(s);
+                    } else {
+                        //服务器错误
                     }
                 }
             }, new Action1<Throwable>() {
                 @Override
                 public void call(Throwable throwable) {
-                    AppLogger.e("服务器加载失败 : " + throwable.toString());
+                    AppLogger.e("服务器加载失败 : " + throwable.toString() + " throwable : " + throwable.getMessage());
                 }
             });
         return subscription;
